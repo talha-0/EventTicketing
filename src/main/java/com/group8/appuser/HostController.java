@@ -37,6 +37,7 @@ public class HostController {
         model.addAttribute("event", event);
         return "addEvent";
     }
+
     @PostMapping("/addEvent")
     public String addEvent(@ModelAttribute("event") Event event, Authentication authentication) {
         String username = authentication.getName();
