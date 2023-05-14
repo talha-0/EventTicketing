@@ -19,8 +19,10 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         if (authorities.contains(new SimpleGrantedAuthority("Admin"))) {
             response.sendRedirect("/admin/home");
-        } else if (authorities.contains(new SimpleGrantedAuthority("Employee"))) {
-            response.sendRedirect("/employee/home");
+        } else if (authorities.contains(new SimpleGrantedAuthority("Customer"))) {
+            response.sendRedirect("/customer/home");
+        }else if (authorities.contains(new SimpleGrantedAuthority("Host"))) {
+            response.sendRedirect("/host/home");
         } else {
                 response.sendRedirect("/logout");
         }

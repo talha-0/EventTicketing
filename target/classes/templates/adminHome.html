@@ -25,9 +25,6 @@
       background-color: #f9f9f9;
     }
     .table-content {
-      display: none;
-    }
-    .table-content.show {
       display: block;
     }
   </style>
@@ -38,10 +35,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="view-past-requests">View Past Requests</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="registration">Add Employee</a>
+          <a class="nav-link" href="view-past-events">View Past Events</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="disable-user">Disable User</a>
@@ -55,37 +49,40 @@
       </ul>
     </div>
   </nav>
+
   <div class="container">
   <h1>Welcome, Admin!</h1>
   <div class="table-wrapper">
     <div class="d-flex justify-content-between align-items-center">
-      <div class="table-title" data-toggle="collapse" data-target="#resource-requests">Pending Resource Requests</div>
+      <div class="table-title">Pending Event Requests</div>
     </div>
     <div id="resource-requests" class="table-content collapse">
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Resource Type</th>
-            <th>Description</th>
-            <th>Request Date</th>
+            <th>Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Location</th>
+            <th>Host</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="resourceRequest : ${resourceRequests}">
-            <td th:text="${resourceRequest.getAppUser().getEmail()}"></td>
-            <td th:text="${resourceRequest.resourceType}"></td>
-            <td th:text="${resourceRequest.description}"></td>
-            <td th:text="${resourceRequest.requestDate}"></td>
+        <tr th:each="event : ${pendingEvents}">
+          <td th:text="${event.name}"></td>
+          <td th:text="${event.start}"></td>
+          <td th:text="${event.end}"></td>
+          <td th:text="${event.location}"></td>
+          <td th:text="${event.appUser.username}"></td>
             <td>
               <div class="btn-group">
-              <form th:action="@{approve-resource}" method="post">
-                <input type="hidden" name="id" th:value="${resourceRequest.id}" />
+              <form th:action="@{approve-event}" method="post">
+                <input type="hidden" name="id" th:value="${event.id}" />
                 <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
               </form>
-              <form th:action="@{reject-resource}" method="post">
-                <input type="hidden" name="id" th:value="${resourceRequest.id}" />
+              <form th:action="@{reject-event}" method="post">
+                <input type="hidden" name="id" th:value="${event.id}" />
                 <button type="submit" class="btn btn-danger" style="margin-left: 10px;"><i class="fas fa-times"></i></button>
               </form>
               </div>
@@ -95,134 +92,8 @@
       </table>
     </div>
   </div>
-  <div class="table-wrapper">
-    <div class="d-flex justify-content-between align-items-center">
-      <div class="table-title" data-toggle="collapse" data-target="#leave-requests">Pending Leave Requests</div>
-    </div>
-    <div id="leave-requests" class="table-content collapse">
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Description</th>
-          <th>Request Date</th>
-          <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="leaveRequest : ${leaveRequests}">
-          <td th:text="${leaveRequest.getAppUser().getEmail()}"></td>
-          <td th:text="${leaveRequest.fromDate}"></td>
-          <td th:text="${leaveRequest.toDate}"></td>
-          <td th:text="${leaveRequest.description}"></td>
-          <td th:text="${leaveRequest.requestDate}"></td>
-          <td>
-            <div class="btn-group">
-            <form th:action="@{approve-leave}" method="post">
-              <input type="hidden" name="id" th:value="${leaveRequest.id}" />
-              <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
-            </form>
-            <form th:action="@{reject-leave}" method="post">
-              <input type="hidden" name="id" th:value="${leaveRequest.id}" />
-              <button type="submit" class="btn btn-danger" style="margin-left: 10px;"><i class="fas fa-times"></i></button>
-            </form>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="table-wrapper">
-    <div class="d-flex justify-content-between align-items-center">
-      <div class="table-title" data-toggle="collapse" data-target="#incentive-requests">Pending Incentive Requests</div>
-    </div>
-    <div id="incentive-requests" class="table-content collapse">
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Incentive Type</th>
-          <th>Amount</th>
-          <th>Description</th>
-          <th>Request Date</th>
-          <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="incentiveRequest : ${incentiveRequests}">
-          <td th:text="${incentiveRequest.getAppUser().getEmail()}"></td>
-          <td th:text="${incentiveRequest.incentiveType}"></td>
-          <td th:text="${incentiveRequest.amount}"></td>
-          <td th:text="${incentiveRequest.description}"></td>
-          <td th:text="${incentiveRequest.requestDate}"></td>
-          <td>
-            <div class="btn-group">
-            <form th:action="@{approve-incentive}" method="post">
-              <input type="hidden" name="id" th:value="${incentiveRequest.id}" />
-              <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
-            </form>
-            <form th:action="@{reject-incentive}" method="post">
-              <input type="hidden" name="id" th:value="${incentiveRequest.id}" />
-              <button type="submit" class="btn btn-danger" style="margin-left: 10px;"><i class="fas fa-times"></i></button>
-            </form>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-    <div class="table-wrapper">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="table-title" data-toggle="collapse" data-target="#announcements">Active Announcemnets</div>
-          <a href="announcements/create" class="btn btn-primary add-request">Add</a>
-        </div>
-      </div>
-      <div id="announcements" class="table-content collapse">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Action</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr th:each="announcement : ${announcements}">
-            <td th:text="${announcement.title}"></td>
-            <td th:text="${announcement.description}"></td>
-            <td th:text="${announcement.date}"></td>
-            <td>
-              <div class="btn-group">
-                <form th:action="@{delete-announcement}" method="post">
-                  <input type="hidden" name="id" th:value="${announcement.id}" />
-                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                </form>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-
-      </div>
-    </div>
 
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script>
-  $(document).ready(function() {
-    $('.table-title').click(function() {
-      $(this).toggleClass('active');
-      $(this).next('.table-content').toggleClass('show');
-    });
-  });
-</script>
 </body>
 </html>

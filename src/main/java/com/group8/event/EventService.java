@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
-@Service
-@Transactional
 @AllArgsConstructor
+@Transactional
+@Service
 public class EventService {
 
     private final EventRepository eventRepository;
@@ -30,5 +30,10 @@ public class EventService {
     }
     public List<Event> getPendingEvents() {
         return eventRepository.findByStatus("Pending");
+    }
+
+    public List<Event> getOngoingEvents() {
+        LocalDate now = LocalDate.now();
+        return eventRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqual(now, now);
     }
 }

@@ -9,7 +9,7 @@
 
 <div class="container">
     <h1 class="text-center my-5">Sign Up</h1>
-    <form th:action="@{process}" th:object="${request}" method="post">
+    <form th:action="@{/registration/process}" th:object="${request}" method="post">
         <div class="form-group">
             <label for="email">Email address:</label>
             <input type="email" class="form-control" id="email" name="email" th:field="*{email}" required>
@@ -34,8 +34,8 @@
                 <label class="form-check-label" for="host">Host</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" id="admin" name="role" value="admin" th:checked="${role == 'Admin'}" required>
-                <label class="form-check-label" for="admin">Admin</label>
+                <input class="form-check-input" type="radio" id="customer" name="role" value="customer" th:checked="${role == 'Customer'}" required>
+                <label class="form-check-label" for="customer">Customer</label>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Sign Up</button>

@@ -16,8 +16,10 @@ public class RegistrationController {
 
         return "registration";
     }
+
+    //according to role
     @PostMapping("/process")
-    public String register( @ModelAttribute RegistrationRequest request){
-        return registrationService.register("employee", request);
+    public String register(@ModelAttribute("role")String role, @ModelAttribute RegistrationRequest request){
+        return registrationService.register(role, request);
     }
 }
