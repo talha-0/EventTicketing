@@ -36,4 +36,9 @@ public class EventService {
         LocalDate now = LocalDate.now();
         return eventRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqual(now, now);
     }
+
+    public List<Event> getHostEvents(String username) {
+        return eventRepository.findByAppUserEmail(username);
+    }
+
 }

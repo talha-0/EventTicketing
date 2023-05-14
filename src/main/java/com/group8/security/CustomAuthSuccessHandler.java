@@ -17,6 +17,7 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        System.out.println("User authorities: " + authorities);
         if (authorities.contains(new SimpleGrantedAuthority("Admin"))) {
             response.sendRedirect("/admin/home");
         } else if (authorities.contains(new SimpleGrantedAuthority("Customer"))) {
