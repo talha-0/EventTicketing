@@ -44,8 +44,6 @@ public class CustomerController {
     public String showActiveEventTickets(Model model, Authentication authentication) {
         String username = authentication.getName();
         List<Ticket> activeTickets = ticketService.getActiveEventTicketsByUsername(username);
-            activeTickets.sort(Comparator.comparing(Ticket::getEventDate));
-            model.addAttribute("activeTickets", activeTickets);
 
         return "tickets";
     }
@@ -66,8 +64,6 @@ public class CustomerController {
         ticket.setAppUser(appUser);
 
         ticketRepository.save(ticket);
-
-
 
         return "redirect:/customer/tickets";
     }

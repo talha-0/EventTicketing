@@ -36,7 +36,7 @@ public class TicketService {
     public List<Ticket> getActiveEventTicketsByUsername(String username) {
         AppUser appUser = appUserRepository.findByEmail(username).get();
         LocalDate now = LocalDate.now();
-        return ticketRepository.findByAppUserAndEventEndDateGreaterThanEqual(appUser, now);
+        return ticketRepository.findByAppUser(appUser);
     }
 
 
