@@ -44,7 +44,7 @@ public class CustomerController {
     public String showActiveEventTickets(Model model, Authentication authentication) {
         String username = authentication.getName();
         List<Ticket> activeTickets = ticketService.getActiveEventTicketsByUsername(username);
-
+        model.addAttribute("tickets", activeTickets);
         return "tickets";
     }
 
