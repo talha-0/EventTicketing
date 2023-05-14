@@ -24,9 +24,6 @@
     .table-striped tbody tr:nth-of-type(odd) {
       background-color: #f9f9f9;
     }
-    .table-content {
-      display: block;
-    }
   </style>
 </head>
 <body>
@@ -56,7 +53,7 @@
     <div class="d-flex justify-content-between align-items-center">
       <div class="table-title">Pending Event Requests</div>
     </div>
-    <div id="resource-requests" class="table-content collapse">
+    <div id="resource-requests" class="table-content">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -71,8 +68,8 @@
         <tbody>
         <tr th:each="event : ${pendingEvents}">
           <td th:text="${event.name}"></td>
-          <td th:text="${event.start}"></td>
-          <td th:text="${event.end}"></td>
+          <td th:text="${event.startDate}"></td>
+          <td th:text="${event.endDate}"></td>
           <td th:text="${event.location}"></td>
           <td th:text="${event.appUser.username}"></td>
             <td>

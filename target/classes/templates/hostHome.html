@@ -51,8 +51,8 @@
       <tbody>
       <tr th:each="event : ${events}">
         <td th:text="${event.name}"></td>
-        <td th:text="${event.start}"></td>
-        <td th:text="${event.end}"></td>
+        <td th:text="${event.startDate}"></td>
+        <td th:text="${event.endDate}"></td>
         <td th:text="${event.location}"></td>
         <td th:text="${event.status}"></td>
       </tr>

@@ -61,15 +61,13 @@ public class CustomerController {
 
         Event event = optionalEvent.get();
 
-        if (!event.getStatus().equals("Active")) {
-            return "redirect:/customer/home";
-        }
-
         Ticket ticket = new Ticket();
         ticket.setEvent(event);
         ticket.setAppUser(appUser);
 
         ticketRepository.save(ticket);
+
+
 
         return "redirect:/customer/tickets";
     }

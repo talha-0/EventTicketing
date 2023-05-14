@@ -17,7 +17,6 @@ import java.util.List;
 public class TicketService {
 
     private final TicketRepository ticketRepository;
-    private final EventRepository eventRepository;
     private AppUserRepository appUserRepository;
 
     @Transactional
@@ -37,8 +36,7 @@ public class TicketService {
     public List<Ticket> getActiveEventTicketsByUsername(String username) {
         AppUser appUser = appUserRepository.findByEmail(username).get();
         LocalDate now = LocalDate.now();
-        return ticketRepository.findByAppUserAndEventEndDateGreaterThanEqual(
-                appUser, now);
+        return ticketRepository.findByAppUserAndEventEndDateGreaterThanEqual(appUser, now);
     }
 
 

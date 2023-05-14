@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 
 @RequestMapping( "/admin")
@@ -31,6 +32,26 @@ public class AdminController {
         model.addAttribute("appUsers", appUsers);
 
         return "disableUser"; // returns the name of your home page HTML template
+    }
+    @PostMapping("/approve-event")
+    public String approveEvent(@RequestParam("id") Long eventId) {
+        Optional<Event> optionalEvent = eventService.getEventById(eventId);
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+            event.setStatus("Approved");
+            eventService.saveEvent(event);
+        }
+        return "redirect:/admin/home";
+    }
+    @PostMapping("/reject-event")
+    public String rejectEvent(@RequestParam("id") Long id) {
+        Optional<Event> optionalEvent = eventService.getEventById(id);
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+            event.setStatus("Rejected");
+            eventService.saveEvent(event);
+        }
+        return "redirect:/admin/home";
     }
     @PostMapping("/disable-user")
     public String disableUser(@RequestParam("id") String email) {
